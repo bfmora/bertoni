@@ -1,22 +1,15 @@
 ﻿using System.Diagnostics;
 using BertoniTest.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using BertoniTest.Helpers.Models;
 using Microsoft.Extensions.Logging;
 using BertoniTest.Services.Interfaces;
-using System.Collections.Generic;
-using BertoniTest.Helpers.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BertoniTest.Web.Controllers
 {
     public class HomeController : Controller
     {
         #region Private Properties
-
-        /// <summary>
-        /// Instance of the Logger Service
-        /// </summary>
-        private readonly ILogger<HomeController> _logger;
 
         /// <summary>
         /// Instance of the Integration Service
@@ -30,11 +23,9 @@ namespace BertoniTest.Web.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="integrationService"></param>
-        public HomeController(ILogger<HomeController> logger, IIntegrationService integrationService)
+        public HomeController(IIntegrationService integrationService)
         {
-            _logger = logger;
             _integrationService = integrationService;
         }
 
@@ -58,6 +49,13 @@ namespace BertoniTest.Web.Controllers
         {
             var photos = _integrationService.GetPhotos(model.Id).Result;
             return PartialView("_AlbumPhotos", photos);
+        }
+
+        [HttpGet]
+        public IActionResult PhotoComment(int id)
+        {
+            var comments = _integrationService.GetComments(id).Result;
+            return PartialView("_Comments", comments);
         }
 
         /// <summary>

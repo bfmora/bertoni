@@ -109,7 +109,28 @@ namespace BertoniTest.Services
         /// <returns></returns>
         public async Task<IEnumerable<Comment>> GetComments(int postId)
         {
-            return null;
+            IEnumerable<Comment> comments = new List<Comment>();
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage httpResponse = await client.GetAsync($"{_appSettings.CommentsEndpoint}?postId={postId}");
+                    httpResponse.EnsureSuccessStatusCode();
+                    string responseBody = await httpResponse.Content.ReadAsStringAsync();
+
+                    if (httpResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        // Converts the response
+                        comments = JsonConvert.DeserializeObject<IEnumerable<Comment>>(responseBody);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Ha ocurrido un error: {ex.Message} {ex.InnerException?.Message}");
+                }
+            }
+
+            return comments;
         }
     }
 }

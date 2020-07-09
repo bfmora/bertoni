@@ -6,6 +6,7 @@
     if (Model?.Count() > 0)
     {
         <div class="text-center">
+            <h1>Fotos</h1>
             <table class="table">
                 <tr>
                     <th>
@@ -45,7 +46,7 @@
                             @Html.DisplayFor(modelItem => item.ThumbnailUrl)
                         </td>
                         <td>
-                            @Html.ActionLink("Ver Comentarios", "Comments", new { id = item.Id })
+                            <a href='@Url.Action("PhotoComment", "Home", new { id = item.Id })' data-ajax-update="#photoList" data-ajax-mode="replace" data-ajax="true">Ver Comentarios</a>
                         </td>
                     </tr>
                 }
