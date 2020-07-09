@@ -1,0 +1,57 @@
+﻿@using BertoniTest.Helpers.Models
+
+@model IEnumerable<Photo>
+
+@{
+    if (Model?.Count() > 0)
+    {
+        <div class="text-center">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AlbumId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Url)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ThumbnailUrl)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AlbumId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Url)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThumbnailUrl)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Ver Comentarios", "Comments", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    }
+}
+

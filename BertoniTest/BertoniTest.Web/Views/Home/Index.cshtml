@@ -1,8 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using BertoniTest.Helpers.Models
+
+@{
+    ViewData["Title"] = "Album Selection Page";
+    var albumData = (IEnumerable<Album>)ViewData["AlbumList"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="text-center">
+        <h1 class="display-4">Bienvenido</h1>
+        <form asp-controller="Home" asp-action="AlbumPhotos" data-ajax="true" data-ajax-method="POST" data-ajax-update="#photoList" data-ajax-mode="replace">
+            <div class="form-horizontal">
+                <h4>Seleccione el Álbum</h4>
+                <hr />
+                <div class="form-group">
+                    <div class="col">
+                        @Html.DropDownListFor(x => albumData.FirstOrDefault().Id, new SelectList(albumData, "Id", "Title"), htmlAttributes: new { @class = "form-control", @id = "albums" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col text-center">
+                        <input id="submit" type="submit" value="Visualizar Álbum" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div id='photoList'>
+        </div>
+    </div>
